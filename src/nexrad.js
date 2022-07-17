@@ -217,8 +217,6 @@ class NexradRadar {
                 }
             }
         }
-    
-        logger.log(`radar filtering: ${beforeCount} -> ${radars.length}`);
         return radars;
     }
     async _addRadarPlot(radar, plot, radarPlot, settings) {
