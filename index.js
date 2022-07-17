@@ -5,7 +5,7 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 
-console.log(process.env.MAP_APIKEY);
+// MAP_APIKEY='AIzaSyDn0rwuFU4XbHCGkOucJ66s9KT2qzBxO2E' AWS_ACCESSKEYID='AKIAULYK6YJBATQLK7FJ' AWS_SECRETACESSKEY='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' node index.js
 
 const app = express();
 const port = 8080;
