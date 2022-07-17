@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 const path = require('path');
 
+console.log(process.env.MAP_APIKEY);
+
 const app = express();
 const port = 8080;
 

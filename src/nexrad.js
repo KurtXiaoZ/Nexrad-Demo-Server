@@ -11,15 +11,13 @@ const RADAR_LOCATIONS = require('./RadarLocations');
 const _ = require('lodash');
 
 const PRECISION = 7; // 6 or 5 is probably safe
-const baseUrl = 'https://maps.googleapis.com/maps/api/staticmap'; // url for google static map
-const APIKEY = "AIzaSyDn0rwuFU4XbHCGkOucJ66s9KT2qzBxO2E";
 const NEXRAD_SIZE = 3600; // size of a nexrad radar image
 const RANGE = 460; // the range of nexrad-level-3-plot is 460km for radius
 const PIXELWIDTH = RANGE / (NEXRAD_SIZE / 2); // the width of a pixel for nexrad-level-3-plot
 const BUCKET = 'noaa-nexrad-level2'; // bucket name for aws nexrad service
 
 // configure aws-sdk
-AWS.config.update({accessKeyId: 'AKIAULYK6YJBATQLK7FJ', secretAccessKey: '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', region: 'us-east-1'});
+AWS.config.update({accessKeyId: process.env.AWS_ACCESSKEYID, secretAccessKey: process.env.AWS_SECRETACESSKEY, region: 'us-east-1'});
 const s3 = new AWS.S3();
 
 class NexradRadar {
@@ -60,7 +58,7 @@ class NexradRadar {
         return `https://maps.googleapis.com/maps/api/staticmap?`
             + `center=${options.center.lat},${options.center.lon}`
             + `&size=${options.width}x${options.height}`
-            + `&key=${APIKEY}`
+            + `&key=${process.env.MAP_APIKEY}`
             + `&zoom=${options.zoom}`
             + `&maptype=${options.mapType}`;
     }
@@ -319,8 +317,5 @@ class NexradRadar {
         return fileName;
     }
 }
-
-const MAPTYPES = ['none', 'roadmap', 'terrain', 'satellite'];
-
 
 module.exports = NexradRadar;
