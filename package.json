@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "aws-sdk": "^2.1031.0",
+    "canvas": "^2.8.0",
+    "body-parser": "^1.19.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.2",
+    "jimp": "^0.16.1",
+    "lodash": "^4.17.21",
+    "nexrad-level-2-data": "^2.0.0",
+    "nexrad-level-2-plot": "^1.1.0",
+    "sphericalmercator": "^1.0.5"
+  }
+}
