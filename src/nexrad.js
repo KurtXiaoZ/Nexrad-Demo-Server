@@ -195,9 +195,7 @@ class NexradRadar {
             .getContext('2d')
             .getImageData(0, 0, NEXRAD_SIZE, NEXRAD_SIZE));
     }
-    async _filterRadars(radars, settings, zoom) {
-        const beforeCount = radars.length;
-    
+    async _filterRadars(radars, settings, zoom) {    
         const cen = this._coordsAt(0, 0, settings);
         let bound = 0;
         if(zoom <= 4) bound = RANGE * 1.5;
@@ -289,19 +287,20 @@ class NexradRadar {
         const fileName = utils.makeid(9);
         const settings = await this._configureMap(latitude, longitude, width, height, zoom, mapType);
         if(!radars || radars.length === 0) {
-            const map = await this._getMap(settings);
+            let map = await this._getMap(settings);
             await map.write(`./outputs/${fileName}.png`);
+            map = null;
             return fileName;
         }
         if(radars.length > 5) {
             radars = await this._filterRadars(radars, settings, zoom);
         }
-        const radarPlot = await new JIMP(settings.width, settings.height, 0x0);
+        let radarPlot = await new JIMP(settings.width, settings.height, 0x0);
     
-        const allRadarsData = await Promise.all(radars.map(this._downloadSingle));
-        const [usedRadars, radarsData] = _.unzip(_.zip(radars, allRadarsData).filter(s => s[1]));
-        const radarsParsed = await Promise.all(radarsData.map(this._parseNexrad));
-        const radarsImgs = await Promise.all(radarsParsed.map(p => this._renderJIMPImage(p.data, NEXRAD_SIZE, NEXRAD_SIZE)));
+        let allRadarsData = await Promise.all(radars.map(this._downloadSingle));
+        let [usedRadars, radarsData] = _.unzip(_.zip(radars, allRadarsData).filter(s => s[1]));
+        let radarsParsed = await Promise.all(radarsData.map(this._parseNexrad));
+        let radarsImgs = await Promise.all(radarsParsed.map(p => this._renderJIMPImage(p.data, NEXRAD_SIZE, NEXRAD_SIZE)));
         await Promise.all(_.zip(usedRadars, radarsImgs).map(v => this._addRadarPlot(v[0], v[1], radarPlot, settings)));
     
         if (mapType !== 'none') {
@@ -311,6 +310,12 @@ class NexradRadar {
         }
         // else console.log(await this._draw(radarPlot));
         else await radarPlot.write(`./outputs/${fileName}.png`);
+        radarPlot = null;
+        allRadarsData = null;
+        usedRadars = null;
+        radarsData = null;
+        radarsParsed = null;
+        radarsImgs = null;
         return fileName;
     }
 }
