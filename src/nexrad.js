@@ -298,7 +298,7 @@ class NexradRadar {
         let radarPlot = await new JIMP(settings.width, settings.height, 0x0);
     
         let allRadarsData = await Promise.all(radars.map(this._downloadSingle));
-        let [usedRadars, radarsData] = _.unzip(_.zip(radars, allRadarsData).filter(s => s[1]));
+        let [usedRadars = [], radarsData = []] = _.unzip(_.zip(radars, allRadarsData).filter(s => s[1]));
         let radarsParsed = await Promise.all(radarsData.map(this._parseNexrad));
         let radarsImgs = await Promise.all(radarsParsed.map(p => this._renderJIMPImage(p.data, NEXRAD_SIZE, NEXRAD_SIZE)));
         await Promise.all(_.zip(usedRadars, radarsImgs).map(v => this._addRadarPlot(v[0], v[1], radarPlot, settings)));
