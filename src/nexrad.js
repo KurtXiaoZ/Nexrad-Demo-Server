@@ -286,7 +286,7 @@ class NexradRadar {
         const settings = await this._configureMap(latitude, longitude, width, height, zoom, mapType);
         if(!radars || radars.length === 0) {
             let map = await this._getMap(settings);
-            await map.write(`./outputs/${fileName}.png`);
+            await map.write(`/home/ec2-user/Nexrad-Demo-Server/outputs/${fileName}.png`);
             map = null;
             return fileName;
         }
@@ -304,10 +304,10 @@ class NexradRadar {
         if (mapType !== 'none') {
             const map = await this._getMap(settings);
             await map.composite(radarPlot, 0, 0);
-            await map.write(`./outputs/${fileName}.png`);
+            await map.write(`/home/ec2-user/Nexrad-Demo-Server/outputs/${fileName}.png`);
         }
         // else console.log(await this._draw(radarPlot));
-        else await radarPlot.write(`./outputs/${fileName}.png`);
+        else await radarPlot.write(`/home/ec2-user/Nexrad-Demo-Server/outputs/${fileName}.png`);
         radarPlot = null;
         allRadarsData = null;
         usedRadars = null;
