@@ -17,7 +17,7 @@ const PIXELWIDTH = RANGE / (NEXRAD_SIZE / 2); // the width of a pixel for nexrad
 const BUCKET = 'noaa-nexrad-level2'; // bucket name for aws nexrad service
 
 // configure aws-sdk
-AWS.config.update({accessKeyId: process.env.AWS_ACCESSKEYID, secretAccessKey: process.env.AWS_SECRETACESSKEY, region: 'us-east-1'});
+AWS.config.update({accessKeyId: 'AKIAULYK6YJBATQLK7FJ'/*process.env.AWS_ACCESSKEYID*/, secretAccessKey: /*process.env.AWS_SECRETACESSKEY*/'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', region: 'us-east-1'});
 const s3 = new AWS.S3();
 
 class NexradRadar {
@@ -58,7 +58,7 @@ class NexradRadar {
         return `https://maps.googleapis.com/maps/api/staticmap?`
             + `center=${options.center.lat},${options.center.lon}`
             + `&size=${options.width}x${options.height}`
-            + `&key=${process.env.MAP_APIKEY}`
+            + `&key=${/*process.env.MAP_APIKEY*/'AIzaSyDn0rwuFU4XbHCGkOucJ66s9KT2qzBxO2E'}`
             + `&zoom=${options.zoom}`
             + `&maptype=${options.mapType}`;
     }
