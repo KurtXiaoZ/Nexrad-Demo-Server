@@ -17,6 +17,7 @@ app.listen(port, () => {
 });
 
 app.post('/plot', async (req, res) => {
+    console.log('receive post request');
     let nexradRadar = new NexradRadar();
     const { lat, lng, zoom, mapType, filteredRadars } = req.body;
     const fileName = await nexradRadar.plotRadarImages(lat, lng, 2000, 2000, zoom, mapType, filteredRadars);
