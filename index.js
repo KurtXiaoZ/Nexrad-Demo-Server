@@ -16,6 +16,15 @@ app.listen(port, () => {
   console.log(`Example app listening at port:${port}`);
 });
 
+fs.readdir('./outputs', (err, files) => {
+  if (err) throw err;
+  for (const file of files) {
+    fs.unlink(`./outputs/${file}`, err => {
+      if (err) throw err;
+    });
+  }
+})
+
 app.post('/plot', async (req, res) => {
     console.log('receive post request');
     let nexradRadar = new NexradRadar();
